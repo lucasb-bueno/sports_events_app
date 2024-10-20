@@ -16,6 +16,7 @@ fun MainRoute(
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
     MainScreen(
+        modifier = modifier,
         uiState = uiState,
         onToggleClick = viewModel::onToggleClick,
         onRefresh = viewModel::getData,

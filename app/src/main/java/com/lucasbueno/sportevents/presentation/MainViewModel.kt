@@ -6,10 +6,6 @@ import com.lucasbueno.sportevents.domain.model.FavoriteEvent
 import com.lucasbueno.sportevents.domain.model.FavoriteSport
 import com.lucasbueno.sportevents.domain.model.Sport
 import com.lucasbueno.sportevents.domain.repository.MainRepository
-import com.lucasbueno.sportevents.domain.usecases.GetFavoriteEventsUseCase
-import com.lucasbueno.sportevents.domain.usecases.GetSportsEventsUseCase
-import com.lucasbueno.sportevents.domain.usecases.UpdateFavoriteEventsUseCase
-import com.lucasbueno.sportevents.domain.usecases.UpdateFavoriteSportsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

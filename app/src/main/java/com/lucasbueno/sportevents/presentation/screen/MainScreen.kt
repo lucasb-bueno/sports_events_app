@@ -26,7 +26,7 @@ fun MainScreen(
     onFavoriteClick: (String, String, Boolean) -> Unit,
     onRefresh: () -> Unit
 ) {
-    Column {
+    Column(modifier = modifier) {
         SportsEventsTopBar()
 
         when (uiState) {
