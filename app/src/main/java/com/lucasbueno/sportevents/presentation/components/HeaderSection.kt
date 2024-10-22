@@ -135,7 +135,7 @@ fun EventsSection(
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
-            .heightIn(max = 300.dp)
+            .heightIn(max = 400.dp)
             .padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp)
