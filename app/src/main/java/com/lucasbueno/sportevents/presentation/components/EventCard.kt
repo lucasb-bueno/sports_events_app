@@ -1,6 +1,6 @@
 package com.lucasbueno.sportevents.presentation.components
 
-import CountdownFromString
+import SportsEventsCountdownTimer
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lucasbueno.sportevents.domain.model.Event
@@ -38,7 +39,7 @@ fun EventCard(
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CountdownFromString(event.eventTimestamp.formatTimestampToTime() ?: "00:00:00")
+        SportsEventsCountdownTimer(event.eventTimestamp.formatTimestampToTime() ?: "00:00:00")
 
         IconButton(onClick = {
             onFavoriteClick(event.sportId.orEmpty(), event.eventId, !isFavorite)
@@ -51,9 +52,9 @@ fun EventCard(
             )
         }
 
-        Text(comp1.orEmpty(), color = Color.White)
+        Text(comp1.orEmpty(), color = Color.White, maxLines = 2, overflow = TextOverflow.Ellipsis)
         Text("vs", color = Color.White)
-        Text(comp2.orEmpty(), color = Color.White)
+        Text(comp2.orEmpty(), color = Color.White, maxLines = 2, overflow = TextOverflow.Ellipsis)
     }
 }
 

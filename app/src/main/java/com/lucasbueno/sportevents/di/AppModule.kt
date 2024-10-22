@@ -95,5 +95,4 @@ object AppModule {
         sportsDao: SportsDao,
         eventsDao: EventsDao
     ): SportsEventsLocalDataSourceImpl = SportsEventsLocalDataSourceImpl(sportsDao, eventsDao)
-
 }

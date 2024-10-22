@@ -8,10 +8,6 @@ import com.lucasbueno.sportevents.data.local.room.model.SportEntity
 
 @Dao
 interface SportsDao {
-    // Update favorite status of a sport
-    @Query("SELECT isFavorite FROM sport_table WHERE sportId = :sportId LIMIT 1")
-    suspend fun isSportFavorite(sportId: String?): Boolean?
-
     @Query("SELECT * FROM sport_table WHERE isFavorite = 1")
     suspend fun getAllFavoriteSports(): List<SportEntity>
 

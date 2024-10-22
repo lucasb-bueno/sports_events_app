@@ -16,7 +16,7 @@ fun SportsEventsTopBar() {
             containerColor = Color.DarkGray,
         ),
         title = {
-            Text("SPORT EVENTS", color = Color.White)
+            Text("SPORT EVENTS APP", color = Color.White)
         }
     )
 }

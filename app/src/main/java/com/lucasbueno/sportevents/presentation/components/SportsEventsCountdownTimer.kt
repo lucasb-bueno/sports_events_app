@@ -7,21 +7,18 @@ import kotlinx.coroutines.delay
 import java.util.concurrent.TimeUnit
 
 @Composable
-fun CountdownFromString(startTime: String) {
-    // Convert the input string "HH:mm:ss" to total milliseconds
+fun SportsEventsCountdownTimer(startTime: String) {
     val totalMilliseconds = parseTimeToMilliseconds(startTime)
 
     var remainingTime by remember { mutableLongStateOf(totalMilliseconds) }
 
-    // LaunchedEffect to update the remaining time every second
     LaunchedEffect(remainingTime) {
         while (remainingTime > 0) {
-            delay(1000L) // Delay for 1 second
-            remainingTime -= 1000L // Subtract one second
+            delay(1000L)
+            remainingTime -= 1000L
         }
     }
 
-    // Derive the formatted time based on remainingTime
     val formattedTime = formatRemainingTime(remainingTime)
 
     Column(
@@ -35,13 +32,11 @@ fun CountdownFromString(startTime: String) {
     }
 }
 
-// Function to convert "HH:mm:ss" to total milliseconds
 private fun parseTimeToMilliseconds(startTime: String): Long {
     val timeParts = startTime.split(":").map { it.toInt() }
     return (timeParts[0] * 3600 + timeParts[1] * 60 + timeParts[2]) * 1000L
 }
 
-// Function to format remaining time in "HH:mm:ss"
 private fun formatRemainingTime(remainingTime: Long): String {
     return if (remainingTime > 0) {
         val hours = TimeUnit.MILLISECONDS.toHours(remainingTime)

@@ -2,14 +2,18 @@ package com.lucasbueno.sportevents.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -29,12 +33,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.FlowRow
 import com.lucasbueno.sportevents.domain.model.Event
 import com.lucasbueno.sportevents.domain.model.FavoriteEvent
 
 @Composable
-fun SectionHeader(
+fun HeaderSection(
     sportId: String,
     title: String,
     isToggled: Boolean,
@@ -124,21 +127,23 @@ fun EventsSection(
     onFavoriteClick: (String, String, Boolean) -> Unit,
     favoriteEventList: List<FavoriteEvent>
 ) {
-    Spacer(modifier = Modifier.height(8.dp))
+    val favoriteEventIds = favoriteEventList
+        .filter { it.sportId == sportId && it.isFavorite }
+        .map { it.eventId }
+        .toSet()
 
-    FlowRow(
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
         modifier = Modifier
-            .fillMaxWidth()
+            .heightIn(max = 300.dp)
             .padding(8.dp),
-        mainAxisSpacing = 8.dp,  // Spacing between items in the row
-        crossAxisSpacing = 8.dp, // Spacing between rows
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
     ) {
-
-        activeEvents?.forEach { event ->
+        items(activeEvents.orEmpty()) { event ->
             EventCard(
                 event = event,
-                isFavorite = favoriteEventList.filter { it.sportId == sportId }
-                    .any { it.eventId == event.eventId && it.isFavorite },
+                isFavorite = favoriteEventIds.contains(event.eventId),
                 onFavoriteClick = onFavoriteClick
             )
         }
@@ -148,10 +153,10 @@ fun EventsSection(
 @Preview(showBackground = true)
 @Composable
 fun PreviewSectionHeader() {
-    SectionHeader(
+    HeaderSection(
         sportId = "",
         title = "SPORT",
-        isToggled = false,
+        isToggled = true,
         onToggleClick = { _, _ -> },
         onFavoriteClick = { _, _, _ -> },
         activeEvents = listOf(),

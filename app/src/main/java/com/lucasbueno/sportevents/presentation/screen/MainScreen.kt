@@ -12,10 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.lucasbueno.sportevents.presentation.DataState
-import com.lucasbueno.sportevents.presentation.components.SectionHeader
+import com.lucasbueno.sportevents.presentation.components.HeaderSection
 import com.lucasbueno.sportevents.presentation.components.SportsEventsTopBar
 
 @Composable
@@ -60,7 +61,8 @@ fun ErrorScreen(modifier: Modifier = Modifier, uiState: DataState) {
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = errorState?.message ?: "Unknown Error")
+        val errorMessage = errorState?.message ?: "Unknown Error"
+        Text(text = "Error: $errorMessage")
     }
 }
 
@@ -74,7 +76,7 @@ fun MainScreenContent(
 ) {
     val successState = uiState as? DataState.Success
 
-    successState?.let {
+    successState?.let { state ->
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -85,21 +87,28 @@ fun MainScreenContent(
                 onRefresh = onRefresh,
                 modifier = Modifier.fillMaxSize()
             ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    val favoriteList = it.data.favoriteSportsList
-                    items(it.data.sportsEventsList) { sport ->
-                        sport?.sportId?.let { id ->
-                            SectionHeader(
-                                sportId = id,
-                                title = sport.sportName ?: "N/A",
-                                isToggled = favoriteList.any { it.sportId == sport.sportId && it.isFavorite },
-                                onToggleClick = onToggleClick,
-                                activeEvents = sport.activeEvents,
-                                onFavoriteClick = onFavoriteClick,
-                                favoriteEventList = successState.data.favoriteEvents
-                            )
+                val sportsEventsList = state.data.sportsEventsList
+                if (sportsEventsList.isEmpty()) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text(text = "No Events to Display!", color = Color.White, fontSize = 20.sp)
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        val favoriteList = state.data.favoriteSportsList
+                        items(sportsEventsList) { sport ->
+                            sport?.sportId?.let { id ->
+                                HeaderSection(
+                                    sportId = id,
+                                    title = sport.sportName ?: "N/A",
+                                    isToggled = favoriteList.any { it.sportId == sport.sportId && it.isFavorite },
+                                    onToggleClick = onToggleClick,
+                                    activeEvents = sport.activeEvents,
+                                    onFavoriteClick = onFavoriteClick,
+                                    favoriteEventList = state.data.favoriteEvents
+                                )
+                            }
                         }
                     }
                 }

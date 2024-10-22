@@ -29,10 +29,10 @@ class MainViewModel @Inject constructor(
             kotlin.runCatching {
                 mainRepository.updateSportIsFavorite(sportId = sportId, isFavorite = isToggled)
             }.onSuccess {
-                println("Added Successfully")
+                println("Added favorite Sport successfully")
                 getFavoriteSports()
             }.onFailure {
-                println("Failed on adding")
+                println("Failed adding favorite Sport")
             }
         }
     }
@@ -46,10 +46,10 @@ class MainViewModel @Inject constructor(
                     isFavorite = isFavorite
                 )
             }.onSuccess {
-                println("Added Successfully")
+                println("Added favorite Event successfully")
                 getFavoriteEvents()
             }.onFailure {
-                println("Failed on adding")
+                println("Failed adding favorite Event")
             }
         }
     }
